@@ -1,0 +1,13 @@
+id = "3f2c84e2-11ee-49c4-b95f-fced6b415161"
+kv_namespaces = [
+    { name = "pending_questions", id = "N7tmrsrgnxjlp1tyGHOAAg==" },
+    { name = "published_questions", id = "Ajxqjekl5wenLyvINdO8Xg==" },
+]
+
+[env]
+MAILGUN_API_BASE_URL = "<your_mailgun_api_base_url>"
+MAILGUN_API_KEY = "<your_mailgun_api_key>"
+QUESTION_RECIPIENT = "me@gmail.com"
+INBOUND_TOKEN = "YOUR_INBOUND_TOKEN" # Set Sendgrid inbound URL to https://qbox.yourdomain.com/api/inbound/YOUR_INBOUND_TOKEN
+MAIL_FROM = "λ-box <lambda-box@example.com>"
+MAIL_REPLY_TO = "reply@lambda-box-inbound.example.com"

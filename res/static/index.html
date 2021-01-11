@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>λ-box 提问箱</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta property="og:title" content="λ-box 提问箱">
+        <meta property="og:description" content="欢迎向我匿名提问">
+        <script src="/scripts/rt.js"></script>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="new-question">
+                <p>欢迎向我匿名提问</p>
+                <textarea oninput="questionInputOnce(event)" id="question-area" class="question-area"></textarea>
+                <button disabled id="send-btn" class="send-btn" onclick="submitQuestion()">发送</button>
+                <p id="success-hint"></p>
+            </div>
+            <div class="question-list-container">
+                <p>已回答的问题</p>
+                <div id="question-list"></div>
+                <p id="loading-box" onclick="updateQuestionList()">加载中</p>
+            </div>
+            <div class="footer">
+                <p><a href="https://github.com/losfair">@losfair</a></p>
+                <p>λ-box v0.1 | 由 <a href="https://github.com/losfair/rusty-workers">rusty-workers</a> 驱动</p>
+            </div>
+        </div>
+    </body>
+</html>

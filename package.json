@@ -1,0 +1,36 @@
+{
+  "name": "qbox",
+  "version": "0.0.0",
+  "description": "Anonymous question box running on rusty-workers.",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/losfair/qbox.git"
+  },
+  "keywords": [
+    "question",
+    "box",
+    "rusty-workers"
+  ],
+  "author": "losfair",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/losfair/qbox/issues"
+  },
+  "homepage": "https://github.com/losfair/qbox#readme",
+  "devDependencies": {
+    "webpack": "^5.11.0",
+    "webpack-cli": "^4.3.1"
+  },
+  "dependencies": {
+    "base64-js": "^1.5.1",
+    "escape-html": "^1.0.3",
+    "mime-types": "^2.1.28",
+    "parse-multipart": "^1.0.4",
+    "path-browserify": "^1.0.1"
+  }
+}
