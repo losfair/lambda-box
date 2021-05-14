@@ -11,6 +11,8 @@ addEventListener("fetch", event => {
  * @param {Request} request 
  */
 async function handleRequest(request) {
+    const forwardedFor = request.headers.get("x-forwarded-for");
+    console.log(`${request.url} Forwarded for: ${forwardedFor}`);
     let url = new URL(request.url);
     if(url.pathname == "/api/add_question") {
         let body = await request.json();
