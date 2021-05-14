@@ -1,5 +1,6 @@
 body {
     touch-action: manipulation;
+    font-family: Optima-Regular, Optima, PingFangSC-light, PingFangTC-light, "PingFang SC", Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 a {
@@ -54,8 +55,12 @@ button:focus {
 }
 
 .container {
-    padding: 24px;
+    padding: 16px;
     color: #121212;
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+    margin: auto;
 }
 
 .question-list-container {
@@ -79,12 +84,11 @@ button:focus {
 .qa-box {
     display: inline-block;
     box-sizing: border-box;
-    padding: 5px 10px;
-    margin: 10px 0;
-    border: 1px solid #E0E0E0;
+    padding: 10px 20px;
+    margin: 30px 0;
     border-radius: 6px;
     width: 100%;
-    box-shadow: 0 0 5px #DDDDDD;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .qa-time-box {

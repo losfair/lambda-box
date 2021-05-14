@@ -1,3 +1,4 @@
 /qbox-build.tar
 /node_modules/
 /dist/
+/qbox_config.toml
