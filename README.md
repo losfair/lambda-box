@@ -6,7 +6,7 @@ Readme is Chinese only since this app is built under a Chinese context.
 
 λ-box 是一个匿名提问箱 app ，由 rusty-workers 驱动。
 
-[我的 λ-box](https://qbox.invariant.cn/)
+[我的 λ-box](https://lambda.app.invariant.cn/)
 
 ## 搭建
 
