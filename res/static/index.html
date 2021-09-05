@@ -5,14 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta charset="utf-8">
         <meta property="og:title" content="λ-box 提问箱">
-        <meta property="og:description" content="欢迎向我匿名提问">
+        <meta property="og:description" content="Ask me anything!">
+        <meta itemprop="name" content="λ-box 提问箱">
+        <meta itemprop="description" content="Ask me anything!">
         <script src="/scripts/rt.js"></script>
         <link rel="stylesheet" href="/style.css">
     </head>
     <body>
         <div class="container">
             <div class="new-question">
-                <p>欢迎向我匿名提问</p>
+                <p>Ask me anything!</p>
                 <textarea oninput="questionInputOnce(event)" id="question-area" class="question-area"></textarea>
                 <button disabled id="send-btn" class="send-btn" onclick="submitQuestion()">发送</button>
                 <p id="success-hint"></p>
