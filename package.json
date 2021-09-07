@@ -23,11 +23,15 @@
   },
   "homepage": "https://github.com/losfair/qbox#readme",
   "devDependencies": {
+    "buffer": "^6.0.3",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.4",
     "webpack": "^5.11.0",
     "webpack-cli": "^4.3.1"
   },
   "dependencies": {
     "base64-js": "^1.5.1",
+    "busboy": "^0.3.1",
     "escape-html": "^1.0.3",
     "mime-types": "^2.1.28",
     "parse-multipart": "^1.0.4",

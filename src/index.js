@@ -1,6 +1,6 @@
 import mime from "mime-types";
+import { parseInboundMail, refineMail } from "./inbound.js";
 import { sendMail } from "./mail.js"
-import { MultiPart_parse } from "./multipart.js";
 
 addEventListener("fetch", event => {
     event.respondWith(handleRequest(event.request));
@@ -69,61 +69,59 @@ async function handleRequest(request) {
         let contentType = request.headers.get("content-type");
         let body = await request.text();
 
-        let parts = MultiPart_parse(body, contentType);
-        console.log("inbound: " + JSON.stringify(parts));
+        const inbound = await parseInboundMail(body, contentType);
+        const mail = refineMail(inbound);
+        console.log("inbound: " + JSON.stringify(mail));
+
+        const inReplyTo = mail.headers["in-reply-to"];
+        if(!inReplyTo) {
+            console.log("not a reply");
+            return mkJsonResponse(200, {});
+        }
+
+        const questionId = inReplyTo.trim();
+        let questionRaw = await kv.pending_questions.get(questionId);
+        if(questionRaw === null) {
+            console.log(`question ${questionId} not found`);
+            return mkJsonResponse(200, {});
+        }
+
+        let question;
+        try {
+            question = JSON.parse(questionRaw);
+        } catch(e) {
+            console.log("bad question encoding: " + questionRaw);
+            return mkJsonResponse(200, {});
+        }
 
         /**
-         * @type {string[][]}
+         * @type {string}
          */
-        let headers = parts.headers.split("\n").map(x => x.trim()).filter(x => x).map(x => x.split(":", 2));
-        for(let [k, v] of headers) {
-            if(k.toLowerCase() == "in-reply-to") {
-                let questionId = v.trim();
-                let questionRaw = await kv.pending_questions.get(questionId);
-                if(questionRaw === null) {
-                    console.log(`question ${questionId} not found`);
-                    break;
-                }
-
-                let question;
-                try {
-                    question = JSON.parse(questionRaw);
-                } catch(e) {
-                    console.log("bad question encoding: " + questionRaw);
-                    break;
-                }
-
-                /**
-                 * @type {string}
-                 */
-                let responseBody = parts.text;
-                if(!responseBody) {
-                    console.log("text body not found");
-                    break;
-                }
-
-                let responseText = responseBody.trim();
-
-                console.log(`received response to question ${questionId}: ${responseText}`);
-
-                // This is NOT atomic but assuming we only have one user... it's ok.
-                let lastIndex = await kv.published_questions.get("index");
-                if(lastIndex === null) {
-                    lastIndex = 0;
-                } else {
-                    lastIndex = parseInt(lastIndex);
-                }
-                await kv.published_questions.put(":" + lastIndex, JSON.stringify({
-                    time: Date.now(),
-                    question: question.text,
-                    response: responseText,
-                }));
-                lastIndex++;
-                await kv.published_questions.put("index", "" + lastIndex);
-                await kv.pending_questions.delete(questionId);
-                break;
-            }
+        let responseBody = mail.content.text;
+        if(!responseBody) {
+            console.log("text body not found");
+            return mkJsonResponse(200, {});
         }
+
+        let responseText = responseBody.trim();
+
+        console.log(`received response to question ${questionId}: ${responseText}`);
+
+        // This is NOT atomic but assuming we only have one user... it's ok.
+        let lastIndex = await kv.published_questions.get("index");
+        if(lastIndex === null) {
+            lastIndex = 0;
+        } else {
+            lastIndex = parseInt(lastIndex);
+        }
+        await kv.published_questions.put(":" + lastIndex, JSON.stringify({
+            time: Date.now(),
+            question: question.text,
+            response: responseText,
+        }));
+        lastIndex++;
+        await kv.published_questions.put("index", "" + lastIndex);
+        await kv.pending_questions.delete(questionId);
 
         return mkJsonResponse(200, {
             ok: true,
