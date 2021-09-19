@@ -1,9 +1,33 @@
 import Busboy from "busboy"
 
-export function parseInboundMail(raw, contentType) {
+export interface InboundMail {
+  fields: Record<string, string>;
+}
+
+export interface MailInfo {
+  subject: string;
+  content: MailContent;
+  envelope: Envelope;
+  prettyFrom: string;
+
+  targetTopic: string;
+  headers: Record<string, string>;
+}
+
+export type MailContent = {
+  text: string;
+  html?: string;
+};
+
+export interface Envelope {
+  to: string[];
+  from: string;
+}
+
+export function parseInboundMail(raw: string, contentType: string): Promise<InboundMail> {
   return new Promise((resolve) => {
     const bb = new Busboy({ headers: { "content-type": contentType } });
-    const inbound = {
+    const inbound: InboundMail = {
       fields: {},
     };
 
@@ -19,7 +43,7 @@ export function parseInboundMail(raw, contentType) {
   });
 }
 
-export function refineMail(inbound) {
+export function refineMail(inbound: InboundMail): MailInfo {
   if (inbound.fields.SPF !== "pass") throw new Error("refineMail: SPF fail");
 
   const subject = inbound.fields.subject;

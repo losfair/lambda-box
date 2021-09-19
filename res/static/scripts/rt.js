@@ -3,7 +3,7 @@
 let loadingTextA = "加载中";
 let loadingTextB = "点击加载更多";
 let loadingTextC = "没有更早的问题";
-let lastIndex = null;
+let lastIndex = 0;
 let reloadAllowed = true;
 
 function padTwoDigitDateElem(v) {
@@ -84,13 +84,13 @@ window.updateQuestionList = async function() {
         },
         method: "POST",
         body: JSON.stringify({
-            start: lastIndex,
+            before: lastIndex,
         }),
     });
     if(!res.ok) {
         throw new Error("fetch questions: " + await res.text());
     }
-    let list = await res.json();
+    let list = (await res.json()).questions;
     console.log(list);
 
     let box = document.getElementById("question-list");
