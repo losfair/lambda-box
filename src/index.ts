@@ -42,6 +42,7 @@ Router.post("/api/get_questions", async request => {
             published = 1 and
             response is not null and
             respond_time is not null
+            order by respond_time desc
             limit 5
         `,
         {id: ["i", req.before]},

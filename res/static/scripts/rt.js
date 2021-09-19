@@ -27,7 +27,7 @@ function formatDate(targetDate) {
     } else if(targetDate.toLocaleDateString() == yesterday.toLocaleDateString()) {
         s = "昨天";
     } else {
-        s = `${targetDate.getFullYear()}年${targetDate.getMonth()}月${targetDate.getDate()}日`;
+        s = `${targetDate.getFullYear()}年${targetDate.getMonth() + 1}月${targetDate.getDate()}日`;
     }
     s += ` ${padTwoDigitDateElem(targetDate.getHours())}:${padTwoDigitDateElem(targetDate.getMinutes())}`;
     return s;
