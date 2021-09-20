@@ -25,7 +25,7 @@ Router.post("/api/add_question", async request => {
     }, "");
     const questionId = (await appDB.exec("select last_insert_id()", {}, "i"))[0][0]!;
     
-    await sendQuestionEmail(questionId, clientIp, req.text);
+    await sendQuestionEmail(questionId, request, req.text);
     return mkJsonResponse(200, {
         ok: true,
     });
@@ -154,12 +154,20 @@ function mkJsonResponse(status: number, data: unknown) {
     });
 }
 
-async function sendQuestionEmail(questionId: number, clientIp: string, text: string) {
+async function sendQuestionEmail(questionId: number, request: Request, text: string) {
+    const clientIp = request.headers.get("x-rw-client-ip") || "?";
+    const clientCountry = request.headers.get("x-rw-client-country") || "?";
+    const clientCity = request.headers.get("x-rw-client-city") || "?";
+    const clientSubdiv1 = request.headers.get("x-rw-client-subdivision-1") || "?";
+    const maybeClientSubdiv2 = request.headers.get("x-rw-client-subdivision-2");
+    const clientSubdiv = maybeClientSubdiv2 ? clientSubdiv1 + "-" + maybeClientSubdiv2 : clientSubdiv1;
+    const clientGeoDesc = `${clientCountry}/${clientSubdiv}/${clientCity}`;
+
     const payload: Record<string, string> = {
         from: appConfig.mailFrom,
         to: appConfig.questionRecipient,
         subject: "新的问题",
-        text: `From: ${clientIp}\n\n${text}`,
+        text: `From: ${clientIp} (${clientGeoDesc})\n\n${text}`,
         "h:Reply-To": appConfig.mailReplyTo,
     };
     let response = await sendMail(payload);
