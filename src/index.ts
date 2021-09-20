@@ -6,6 +6,7 @@ import { parseInboundMail, refineMail } from "./inbound";
 import { sendMail } from "./mail"
 import { jsonGenericErrorResponse, jsonResponse, tyckRequest } from "./util";
 import * as schema from "./api_schema";
+import "./geoip_restrict";
 
 Router.post("/api/add_question", async request => {
     const req = await tyckRequest(request, schema.parser_AddQuestionRequest);
@@ -15,13 +16,16 @@ Router.post("/api/add_question", async request => {
         return jsonGenericErrorResponse(400, "invalid text field");
     }
 
-    await appDB.exec("insert into questions (question, create_time) values(:q, :ct)", {
+    const clientIp = request.headers.get("x-rw-client-ip") || "";
+
+    await appDB.exec("insert into questions (question, client_ip, create_time) values(:q, :ci, :ct)", {
         "q": ["s", req.text],
+        "ci": ["s", clientIp],
         "ct": ["d", new Date()],
     }, "");
     const questionId = (await appDB.exec("select last_insert_id()", {}, "i"))[0][0]!;
     
-    await sendQuestionEmail(questionId, req.text);
+    await sendQuestionEmail(questionId, clientIp, req.text);
     return mkJsonResponse(200, {
         ok: true,
     });
@@ -147,12 +151,12 @@ function mkJsonResponse(status: number, data: unknown) {
     });
 }
 
-async function sendQuestionEmail(questionId: number, text: string) {
+async function sendQuestionEmail(questionId: number, clientIp: string, text: string) {
     const payload: Record<string, string> = {
         from: appConfig.mailFrom,
         to: appConfig.questionRecipient,
         subject: "新的问题",
-        text: text,
+        text: `From: ${clientIp}\n\n${text}`,
         "h:Reply-To": appConfig.mailReplyTo,
     };
     let response = await sendMail(payload);

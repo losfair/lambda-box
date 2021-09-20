@@ -11,3 +11,5 @@ create table questions (
   index by_create_time (create_time),
   index by_respond_time (respond_time)
 );
+
+alter table questions add `client_ip` varchar(100) not null after `question`;
