@@ -26,7 +26,12 @@
             </div>
             <div class="footer">
                 <p>λ-box v1.0.2</p>
-                <p><a href="https://univalence.me">Univalence Labs</a></p>
+                <p>
+                    <a href="https://univalence.me">Univalence Labs</a>
+                    {% if icpBeian %}
+                    <span> | <a href="https://beian.miit.gov.cn/">{{ icpBeian }}</a></span>
+                    {% endif %}
+                </p>
             </div>
         </div>
     </body>

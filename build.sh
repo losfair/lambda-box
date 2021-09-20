@@ -15,8 +15,7 @@ cleanup()
 trap cleanup EXIT
 
 cp "./dist/main.js" "$TMP/index.js"
-cp -r ./res "$TMP/" 
-find res -type f > "$TMP/static.txt"
+cp -r ./res "$TMP/"
 
 cd "$TMP" || exit 1
 tar c . > "$OLDPWD/lambda-box-build.tar" || exit 1

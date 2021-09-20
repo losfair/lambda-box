@@ -114,22 +114,25 @@ Router.post(`/api/inbound/${appConfig.inboundToken}`, async req => {
     });
 })
 
-const fileList = new TextDecoder().decode(Package["static.txt"]).split("\n").filter(x => x);
-const staticFiles: Record<string, Uint8Array> = {};
-for(const f of fileList) {
-    console.log(`Loading file: ${f}`)
-    staticFiles[f] = Package[f];
-}
-
 Router.get("/", req => {
     let url = new URL(req.url);
+    if(url.pathname == "/") {
+        return new Response(Template.render(new TextDecoder().decode(Package["res/index.html"]), {
+            icpBeian: appConfig.icpBeian,
+        }), {
+            headers: {
+                "Content-Type": "text/html",
+            }
+        });
+    }
+
     let filePath: string;
     if(url.pathname.endsWith("/")) {
         filePath = url.pathname + "index.html";
     } else {
         filePath = url.pathname;
     }
-    const file = staticFiles["res/static" + filePath];
+    const file = Package["res/static" + filePath];
     if(file === undefined) {
         return new Response("not found: " + filePath, {
             status: 404,
