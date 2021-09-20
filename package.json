@@ -38,9 +38,7 @@
     "ajv": "^8.6.3",
     "base64-js": "^1.5.1",
     "busboy": "^0.3.1",
-    "escape-html": "^1.0.3",
     "mime-types": "^2.1.28",
-    "parse-multipart": "^1.0.4",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10"
   }

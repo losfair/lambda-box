@@ -7,10 +7,8 @@ specifiers:
   base64-js: ^1.5.1
   buffer: ^6.0.3
   busboy: ^0.3.1
-  escape-html: ^1.0.3
   jsland-types: link:../rwv2/jsland-types
   mime-types: ^2.1.28
-  parse-multipart: ^1.0.4
   path-browserify: ^1.0.1
   process: ^0.11.10
   stream-browserify: ^3.0.0
@@ -24,9 +22,7 @@ dependencies:
   ajv: 8.6.3
   base64-js: 1.5.1
   busboy: 0.3.1
-  escape-html: 1.0.3
   mime-types: 2.1.32
-  parse-multipart: 1.0.4
   path-browserify: 1.0.1
   process: 0.11.10
 
@@ -461,10 +457,6 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /escape-html/1.0.3:
-    resolution: {integrity: sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=}
-    dev: false
-
   /eslint-scope/5.1.1:
     resolution: {integrity: sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw==}
     engines: {node: '>=8.0.0'}
@@ -885,10 +877,6 @@ packages:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
     dev: true
-
-  /parse-multipart/1.0.4:
-    resolution: {integrity: sha1-dnuHiLJIe4e4OhlhXNa6eKjRRJI=, tarball: parse-multipart/-/parse-multipart-1.0.4.tgz}
-    dev: false
 
   /path-browserify/1.0.1:
     resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
