@@ -14,7 +14,7 @@ module.exports = {
         extensions: ['.ts', '.js'],
     },
     optimization: {
-      minimize: true,
+      minimize: false,
     },
     module: {
       rules: [

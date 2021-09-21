@@ -4,12 +4,12 @@ import * as mime from "mime-types";
 import { appConfig, appDB } from "./config";
 import { parseInboundMail, refineMail } from "./inbound";
 import { sendMail } from "./mail"
-import { jsonGenericErrorResponse, jsonResponse, tyckRequest } from "./util";
+import { jsonGenericErrorResponse, tyckRequest } from "./util";
 import * as schema from "./api_schema";
 import "./geoip_restrict";
 
 Router.post("/api/add_question", async request => {
-    const req = await tyckRequest(request, schema.parser_AddQuestionRequest);
+    const req = await tyckRequest(request, schema.validator_AddQuestionRequest);
     if(req instanceof Response) return req;
     
     if(req.text.length == 0 || req.text.length > 10000) {
@@ -32,7 +32,7 @@ Router.post("/api/add_question", async request => {
 });
 
 Router.post("/api/get_questions", async request => {
-    const req = await tyckRequest(request, schema.parser_GetQuestionsRequest);
+    const req = await tyckRequest(request, schema.validator_GetQuestionsRequest);
     if(req instanceof Response) return req;
 
     const res: schema.QuestionListResponse = {
@@ -58,14 +58,14 @@ Router.post("/api/get_questions", async request => {
                 response: response!,
             }
         }));
-    return jsonResponse(res, schema.serializer_QuestionListResponse);
+    return mkJsonResponse(200, res);
 })
 
 Router.post(`/api/inbound/${appConfig.inboundToken}`, async req => {
     let contentType = req.headers.get("content-type") || "";
-    let body = await req.text();
+    let body = await req.arrayBuffer();
 
-    const inbound = await parseInboundMail(body, contentType);
+    const inbound = parseInboundMail(new Uint8Array(body), contentType);
     const mail = refineMail(inbound);
     console.log("inbound: " + JSON.stringify(mail));
 

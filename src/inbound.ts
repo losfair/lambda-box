@@ -1,5 +1,3 @@
-import Busboy from "busboy"
-
 export interface InboundMail {
   fields: Record<string, string>;
 }
@@ -24,23 +22,18 @@ export interface Envelope {
   from: string;
 }
 
-export function parseInboundMail(raw: string, contentType: string): Promise<InboundMail> {
-  return new Promise((resolve) => {
-    const bb = new Busboy({ headers: { "content-type": contentType } });
+export function parseInboundMail(raw: Uint8Array, contentType: string): InboundMail {
     const inbound: InboundMail = {
       fields: {},
     };
-
-    bb
-      .on("field", (fieldname, val) => {
-        inbound.fields[fieldname] = "" + val;
-      })
-      .on("finish", () => {
-        resolve(inbound);
-      });
-
-    bb.end(raw);
-  });
+    const boundary = contentType.split("boundary=")[1];
+    if(!boundary) throw new Error("bad boundary");
+    const fields = Codec.Multipart.decode(raw, boundary);
+    for(const f of fields) {
+      if(!f.name) throw new Error("empty field");
+      inbound.fields[f.name] = new TextDecoder().decode(f.body);
+    }
+    return inbound;
 }
 
 export function refineMail(inbound: InboundMail): MailInfo {

@@ -1,34 +1,21 @@
-import { JTDParser } from "ajv/dist/jtd";
+import { JTDStaticSchema } from "jsland-types/src/validation/jtd";
 
 export async function tyckRequest<T>(
   req: Request,
-  parser: JTDParser<T>
+  validator: JTDStaticSchema<T>,
 ): Promise<T | Response> {
-  const text = await req.text();
-  const res = parser(text);
-  if (res === undefined) {
+  const raw: unknown = await req.json();
+  if(!validator.validate(raw)) {
     let res = {
       error: "decode_error",
-      message: parser.message,
-      position: parser.position,
+      message: validator.lastError || "",
     };
     return new Response(JSON.stringify(res), {
       status: 400,
     });
   } else {
-    return res;
+    return raw;
   }
-}
-
-export function jsonResponse<T>(
-  value: T,
-  serializer: (x: T) => string
-): Response {
-  return new Response(serializer(value), {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
 }
 
 export function jsonGenericErrorResponse(

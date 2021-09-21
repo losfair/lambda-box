@@ -1,6 +1,4 @@
-import Ajv, { JTDSchemaType } from "ajv/dist/jtd";
-
-const ajv = new Ajv();
+import { JTDSchemaType, JTDStaticSchema } from "jsland-types/src/validation/jtd";
 
 export interface AddQuestionRequest {
   text: string;
@@ -10,7 +8,7 @@ export const schema_AddQuestionRequest: JTDSchemaType<AddQuestionRequest> = {
     text: { type: "string" },
   }
 };
-export const parser_AddQuestionRequest = ajv.compileParser(schema_AddQuestionRequest);
+export const validator_AddQuestionRequest = new Validation.JTD.JTDStaticSchema(schema_AddQuestionRequest);
 
 export interface GetQuestionsRequest {
   before: number;
@@ -20,7 +18,7 @@ export const schema_GetQuestionsRequest: JTDSchemaType<GetQuestionsRequest> = {
     before: { type: "float64" },
   },
 };
-export const parser_GetQuestionsRequest = ajv.compileParser(schema_GetQuestionsRequest);
+export const validator_GetQuestionsRequest = new Validation.JTD.JTDStaticSchema(schema_GetQuestionsRequest);
 
 export interface QuestionListResponse {
   questions: {
@@ -50,4 +48,3 @@ export const schema_QuestionListResponse: JTDSchemaType<QuestionListResponse> = 
     }
   }
 }
-export const serializer_QuestionListResponse = ajv.compileSerializer(schema_QuestionListResponse);
