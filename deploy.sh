@@ -18,7 +18,5 @@ fi
 RUST_LOG=info S3CMD_CFG=$CONFIG_PATH/s3.config ../rwv2/scripts/build_and_upload.mjs \
   -f ./lambda-box-build.tar \
   --mysql $CONFIG_PATH/mysql.json \
-  --mkimage ../rwv2/bin/mkimage/ \
   --env $CONFIG_PATH/env.json \
-  --s3_bucket "$S3_BUCKET" --s3_prefix /lambda-box/ \
-  --lazy
+  --s3_bucket "$S3_BUCKET" --s3_prefix /lambda-box/
