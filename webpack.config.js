@@ -4,13 +4,7 @@ module.exports = {
     entry: "./src/index.ts",
     mode: "production",
     resolve: {
-        fallback: {
-            "path": require.resolve("path-browserify"),
-            "stream": require.resolve("stream-browserify"),
-            "util": require.resolve("util/"),
-            "buffer": require.resolve("buffer/"),
-            "fs": false,
-        },
+        fallback: {},
         extensions: ['.ts', '.js'],
     },
     optimization: {
@@ -26,9 +20,5 @@ module.exports = {
       ],
     },
     plugins: [
-      new webpack.ProvidePlugin({
-        process: 'process/browser.js',
-        Buffer: ['buffer', 'Buffer'],
-      }),
     ],
 }

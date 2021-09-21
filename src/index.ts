@@ -1,6 +1,5 @@
 /// <reference path="../node_modules/jsland-types/src/index.d.ts" />
 
-import * as mime from "mime-types";
 import { appConfig, appDB } from "./config";
 import { parseInboundMail, refineMail } from "./inbound";
 import { sendMail } from "./mail"
@@ -138,7 +137,9 @@ Router.get("/", req => {
             status: 404,
         });
     } else {
-        let contentType = mime.lookup(filePath) || "application/octet-stream";
+        let segs = filePath.split(".");
+        let ext = segs[segs.length - 1];
+        let contentType = Dataset.Mime.guessByExt(ext) || "application/octet-stream";
         return new Response(file, {
             headers: {
                 "Content-Type": contentType,
