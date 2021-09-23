@@ -28,7 +28,7 @@ Router.get("/u/", async req => {
       pageError: "This user is not in the currently configured allow list.",
     });
   }
-  
+
   const uinfo = await loadGhUserInfo(username, false);
   if(!uinfo || isExpired(uinfo.mdSection.expire) || isExpired(uinfo.userinfoSection.expire)) {
     Background.atMostOnce(bgImpl, "syncGhUserInfo", username);
@@ -36,7 +36,7 @@ Router.get("/u/", async req => {
 
   if(uinfo.userinfoSection.expire.getTime() == 0) {
     return renderIndex({
-      status: 404,
+      status: 503,
       pageError: "Collecting data. Come back soon.",
     });
   }
