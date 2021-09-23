@@ -4,7 +4,9 @@ module.exports = {
     entry: "./src/index.ts",
     mode: "production",
     resolve: {
-        fallback: {},
+        fallback: {
+          "buffer": require.resolve("buffer/"),
+        },
         extensions: ['.ts', '.js'],
     },
     optimization: {
@@ -20,5 +22,8 @@ module.exports = {
       ],
     },
     plugins: [
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+      }),
     ],
 }

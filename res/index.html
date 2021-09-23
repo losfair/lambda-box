@@ -8,24 +8,36 @@
         <meta property="og:description" content="Ask me anything!">
         <meta itemprop="name" content="λ-box 提问箱">
         <meta itemprop="description" content="Ask me anything!">
+        <script>
+            const lb_ownerGhid = {{ ownerGhid | safe }};
+            const lb_ownerGhlogin = {{ ownerGhlogin | safe }};
+        </script>
         <script src="/scripts/rt.js"></script>
         <link rel="stylesheet" href="/style.css">
     </head>
     <body>
         <div class="container">
+            {% if pageError %}
+            <p>{{ pageError }}</p>
+            {% else %}
             <div class="new-question">
-                <p>Ask me anything!</p>
+                <p>Ask @<a href="https://github.com/{{ ownerGhloginUnwrapped }}">{{ ownerGhloginUnwrapped }}</a></p>
+                {% if blockReason %}
+                <p id="success-hint">{{ blockReason }}</p>
+                {% else %}
                 <textarea oninput="questionInputOnce(event)" id="question-area" class="question-area"></textarea>
                 <button disabled id="send-btn" class="send-btn" onclick="submitQuestion()">发送</button>
                 <p id="success-hint"></p>
+                {% endif %}
             </div>
             <div class="question-list-container">
                 <p>已回答的问题</p>
                 <div id="question-list"></div>
                 <p id="loading-box" onclick="updateQuestionList()">加载中</p>
             </div>
+            {% endif %}
             <div class="footer">
-                <p>λ-box v1.0.4</p>
+                <p>λ-box v2.0.0</p>
                 <p>
                     <a href="https://univalence.me">Univalence Labs</a>
                     {% if icpBeian %}

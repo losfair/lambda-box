@@ -47,6 +47,7 @@ window.submitQuestion = async function () {
         method: "POST",
         body: JSON.stringify({
             text: textarea.value,
+            owner_ghid: lb_ownerGhid,
         }),
     });
 
@@ -85,6 +86,7 @@ window.updateQuestionList = async function() {
         method: "POST",
         body: JSON.stringify({
             before: lastIndex,
+            owner_ghid: lb_ownerGhid,
         }),
     });
     if(!res.ok) {

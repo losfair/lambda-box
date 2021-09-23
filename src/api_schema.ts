@@ -1,20 +1,24 @@
-import { JTDSchemaType, JTDStaticSchema } from "jsland-types/src/validation/jtd";
+import { JTDSchemaType } from "jsland-types/src/validation/jtd";
 
 export interface AddQuestionRequest {
+  owner_ghid: number;
   text: string;
 }
 export const schema_AddQuestionRequest: JTDSchemaType<AddQuestionRequest> = {
   properties: {
+    owner_ghid: { type: "uint32" },
     text: { type: "string" },
   }
 };
 export const validator_AddQuestionRequest = new Validation.JTD.JTDStaticSchema(schema_AddQuestionRequest);
 
 export interface GetQuestionsRequest {
+  owner_ghid: number;
   before: number;
 }
 export const schema_GetQuestionsRequest: JTDSchemaType<GetQuestionsRequest> = {
   properties: {
+    owner_ghid: { type: "uint32" },
     before: { type: "float64" },
   },
 };

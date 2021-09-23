@@ -23,17 +23,17 @@ export interface Envelope {
 }
 
 export function parseInboundMail(raw: Uint8Array, contentType: string): InboundMail {
-    const inbound: InboundMail = {
-      fields: {},
-    };
-    const boundary = contentType.split("boundary=")[1];
-    if(!boundary) throw new Error("bad boundary");
-    const fields = Codec.Multipart.decode(raw, boundary);
-    for(const f of fields) {
-      if(!f.name) throw new Error("empty field");
-      inbound.fields[f.name] = new TextDecoder().decode(f.body);
-    }
-    return inbound;
+  const inbound: InboundMail = {
+    fields: {},
+  };
+  const boundary = contentType.split("boundary=")[1];
+  if(!boundary) throw new Error("bad boundary");
+  const fields = Codec.Multipart.decode(raw, boundary);
+  for(const f of fields) {
+    if(!f.name) throw new Error("empty field");
+    inbound.fields[f.name] = new TextDecoder().decode(f.body);
+  }
+  return inbound;
 }
 
 export function refineMail(inbound: InboundMail): MailInfo {

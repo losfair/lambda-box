@@ -35,3 +35,10 @@ export function jsonGenericErrorResponse(
     }
   );
 }
+
+export function mkJsonResponse(status: number, data: unknown) {
+  return new Response(JSON.stringify(data), {
+    headers: { "Content-Type": "application/json" },
+    status: status,
+  });
+}
