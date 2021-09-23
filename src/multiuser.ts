@@ -1,4 +1,5 @@
 import { bgImpl } from "./bg";
+import { appConfig } from "./config";
 import { isExpired, loadGhUserInfo } from "./multiuser_sync";
 import { renderIndex } from "./render";
 import { jsonGenericErrorResponse } from "./util";
@@ -20,6 +21,14 @@ Router.get("/u/", async req => {
   const username = match[2];
 
   if(idp != "gh") return jsonGenericErrorResponse(400, "idp not supported");
+
+  if(appConfig.allowedGhUsers.length && appConfig.allowedGhUsers.findIndex(x => x == username) == -1) {
+    return renderIndex({
+      status: 403,
+      pageError: "This user is not in the currently configured allow list.",
+    });
+  }
+  
   const uinfo = await loadGhUserInfo(username, false);
   if(!uinfo || isExpired(uinfo.mdSection.expire) || isExpired(uinfo.userinfoSection.expire)) {
     Background.atMostOnce(bgImpl, "syncGhUserInfo", username);

@@ -7,6 +7,7 @@ export const appConfig = {
   icpBeian: App.env["icpBeian"] || "",
   ghToken: App.mustGetEnv("ghToken"),
   allowedCountries: (App.env["allowedCountries"] || "").split(",").filter(x => x),
+  allowedGhUsers: (App.env["allowedGhUsers"] || "").split(",").filter(x => x),
   useWpbl: App.env["useWpbl"] === "1",
 }
 
