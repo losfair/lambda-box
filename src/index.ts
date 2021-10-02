@@ -22,7 +22,7 @@ Router.get("/", req => {
   } else {
     filePath = url.pathname;
   }
-  const file = Package["res/static" + filePath];
+  const file = Package["static" + filePath];
   if(file === undefined) {
     return new Response("not found: " + filePath, {
       status: 404,

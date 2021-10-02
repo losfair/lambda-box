@@ -10,7 +10,7 @@ export interface IndexRenderConfig {
 }
 
 export function renderIndex(config: IndexRenderConfig): Response {
-  return new Response(Template.render(new TextDecoder().decode(Package["res/index.html"]), {
+  return new Response(Template.render(new TextDecoder().decode(Package["templates/index.tera"]), {
     icpBeian: appConfig.icpBeian,
     pageError: config.pageError,
     ownerGhlogin: JSON.stringify(config.ownerGhlogin || ""),

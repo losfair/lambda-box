@@ -1,0 +1,13 @@
+appid: net.univalent.lambda-box
+build: pnpm run build
+artifact: dist/main.js
+static: ./res
+env:
+- inboundToken
+- mailFrom
+- mailReplyTo
+- mailgunApiKey
+- mailgunApiBaseUrl
+- ghToken
+mysql:
+- lambda
