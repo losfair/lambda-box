@@ -68,6 +68,6 @@ Router.get("/u/", async req => {
     ownerGhid: uinfo.userinfoSection.ghid,
     ownerGhlogin: username,
     userMd,
-    blockReason: req.headers.get("x-rw-app-block-reason"),
+    blockReason: req.headers.get("x-blueboat-app-block-reason"),
   });
 });

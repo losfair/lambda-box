@@ -5,7 +5,7 @@ import { sendMail } from "./mail";
 import { loadGhUserInfo } from "./multiuser_sync";
 
 Router.post("/api/add_question", async request => {
-  const blockReason = request.headers.get("x-rw-app-block-reason");
+  const blockReason = request.headers.get("x-blueboat-app-block-reason");
   if(blockReason) {
     return jsonGenericErrorResponse(403, blockReason);
   }
@@ -20,7 +20,7 @@ Router.post("/api/add_question", async request => {
   const ownerInfo = await loadGhUserInfo(req.owner_ghid, false);
   if(!ownerInfo.userinfoSection.email || !ownerInfo.mdSection.userConfig) return jsonGenericErrorResponse(400, "invalid owner ghid");
 
-  const clientIp = request.headers.get("x-rw-client-ip") || "";
+  const clientIp = request.headers.get("x-blueboat-client-ip") || "";
 
   await appDB.exec("insert into questions (owner_ghid, question, client_ip, create_time) values(:owner, :q, :ci, :ct)", {
     "owner": ["i", req.owner_ghid],
@@ -68,11 +68,11 @@ Router.post("/api/get_questions", async request => {
 })
 
 async function sendQuestionEmail(ownerEmail: string, questionId: number, request: Request, text: string) {
-  const clientIp = request.headers.get("x-rw-client-ip") || "?";
-  const clientCountry = request.headers.get("x-rw-client-country") || "?";
-  const clientCity = request.headers.get("x-rw-client-city") || "?";
-  const clientSubdiv1 = request.headers.get("x-rw-client-subdivision-1") || "?";
-  const maybeClientSubdiv2 = request.headers.get("x-rw-client-subdivision-2");
+  const clientIp = request.headers.get("x-blueboat-client-ip") || "?";
+  const clientCountry = request.headers.get("x-blueboat-client-country") || "?";
+  const clientCity = request.headers.get("x-blueboat-client-city") || "?";
+  const clientSubdiv1 = request.headers.get("x-blueboat-client-subdivision-1") || "?";
+  const maybeClientSubdiv2 = request.headers.get("x-blueboat-client-subdivision-2");
   const clientSubdiv = maybeClientSubdiv2 ? clientSubdiv1 + "-" + maybeClientSubdiv2 : clientSubdiv1;
   const clientGeoDesc = `${clientCountry}/${clientSubdiv}/${clientCity}`;
 

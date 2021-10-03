@@ -1,4 +1,4 @@
-/// <reference path="../node_modules/jsland-types/src/index.d.ts" />
+/// <reference path="../node_modules/blueboat-types/src/index.d.ts" />
 
 import "./restrict";
 import "./multiuser";

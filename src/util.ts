@@ -1,4 +1,4 @@
-import { JTDStaticSchema } from "jsland-types/src/validation/jtd";
+import { JTDStaticSchema } from "blueboat-types/src/validation/jtd";
 
 export async function tyckRequest<T>(
   req: Request,

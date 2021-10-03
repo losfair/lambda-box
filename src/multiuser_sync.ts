@@ -141,7 +141,7 @@ export async function syncGhUserinfo_InTxn(username: string): Promise<GhUserInfo
       console.log(`cannot fetch /LAMBDA_BOX.md in repo ${username}/${username}`);
     }
 
-    let decoded: GrayMatterFile<never> | null = null;
+    let decoded: GrayMatterFile<string> | null = null;
     try {
       if(typeof mdContent === "string") decoded = grayMatter(mdContent);
     } catch(e) {
