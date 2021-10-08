@@ -7,12 +7,6 @@ a {
     color: #121212;
 }
 
-textarea:focus {
-    outline: none !important;
-    border: none;
-    box-shadow: 0 0 5px #BBBBBB;
-}
-
 textarea {
     box-sizing: border-box;
 }
@@ -28,10 +22,21 @@ button:focus {
     margin: 0;
     background-color: #EEEEEE;
     border: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.question-area:focus {
+    outline: none !important;
+}
+
+.question-area::placeholder {
+    color: #AFAFAF;
+    font-weight: normal;
 }
 
 .send-btn {
-    background-color: #303030;
+    background-color: #28afb0;
     color: #FFFFFF;
     padding: 8px 0;
     margin-top: 5px;
@@ -40,11 +45,7 @@ button:focus {
 }
 
 .send-btn:disabled {
-    background-color: #B0B0B0;
-}
-
-.send-btn:active {
-    background-color: #202020;
+    opacity: 0.5;
 }
 
 #success-hint {
@@ -119,7 +120,7 @@ button:focus {
 .qa-response-box {
     position: fixed;
     box-sizing: border-box;
-    top: 120px;
+    top: 80px;
     left: 20px;
     right: 20px;
     display: none;
@@ -130,7 +131,7 @@ button:focus {
     background-color: #FFFFFF;
     border: 1px solid #909090;
     border-radius: 6px;
-    max-height: 500px;
+    max-height: calc(100vh - 160px);
     overflow: scroll;
 }
 
@@ -138,15 +139,28 @@ button:focus {
     font-size: 20px;
 }
 
+.qa-response-box-question-text {
+    color: #28afb0;
+    margin-top: 20px;
+}
+
+.qa-response-box-delim {
+    margin: 20px 0;
+    border-bottom: 1px dashed #28afb0;
+    width: 100%;
+    height: 0;
+}
+
 .intro {
-    border: 1px solid #28afb0;
+    border: 1px dashed #28afb0;
+    color: #28afb0;
     box-sizing: border-box;
     padding: 5px 10px;
     border-radius: 10px;
-    border-style: dashed;
     margin-bottom: 20px;
 }
 
 .intro-tail, .intro-tail > a {
     color: #A0A0A0;
+    font-size: 14px;
 }

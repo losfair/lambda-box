@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>λ-box 提问箱</title>
+        <title>{{ pageTitle }}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta charset="utf-8">
-        <meta property="og:title" content="{{ metaTitle }}">
+        <meta property="og:title" content="{{ pageTitle }}">
         <meta property="og:description" content="{{ metaDesc }}">
-        <meta itemprop="name" content="{{ metaTitle }}">
+        <meta itemprop="name" content="{{ pageTitle }}">
         <meta itemprop="description" content="{{ metaDesc }}">
         <script>
             const lb_ownerGhid = {{ ownerGhid | safe }};
@@ -25,17 +25,16 @@
                 <div class="intro">
                     {{ userMdHtml | safe }}
                     <p class="intro-tail">
-                        @<a href="https://github.com/{{ ownerGhloginUnwrapped }}">{{ ownerGhloginUnwrapped }}</a>
+                        向 @<a href="https://github.com/{{ ownerGhloginUnwrapped }}">{{ ownerGhloginUnwrapped }}</a> 匿名提问
                     </p>
                 </div>
-                <p>{{ questionHint }}</p>
                 {% else %}
                 <p>Ask @<a href="https://github.com/{{ ownerGhloginUnwrapped }}">{{ ownerGhloginUnwrapped }}</a></p>
                 {% endif %}
                 {% if blockReason %}
                 <p id="success-hint">{{ blockReason }}</p>
                 {% else %}
-                <textarea oninput="questionInputOnce(event)" id="question-area" class="question-area"></textarea>
+                <textarea oninput="questionInputOnce(event)" id="question-area" class="question-area" placeholder="在此处撰写你的问题"></textarea>
                 <button disabled id="send-btn" class="send-btn" onclick="submitQuestion()">发送</button>
                 <p id="success-hint"></p>
                 {% endif %}
@@ -47,7 +46,7 @@
             </div>
             {% endif %}
             <div class="footer">
-                <p>λ-box v2.0.1</p>
+                <p>λ-box v2.0.2</p>
                 <p>
                     <a href="https://univalence.me">Univalence Labs</a>
                     {% if icpBeian %}

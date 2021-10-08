@@ -129,8 +129,11 @@ window.updateQuestionList = async function() {
 
         responseBox = document.createElement("div");
         responseBox.classList.add("qa-response-box");
-        responseBox.innerText = entry.response;
-        responseBox.innerHTML = "<p>回答</p>" + responseBox.innerHTML;
+        responseBox.innerHTML = `
+<div class="qa-response-box-question-text">${escapeHtml(entry.question)}</div>
+<div class="qa-response-box-delim"></div>
+<p style="color:#A0A0A0;font-size:14px">回答</p>
+${escapeHtml(entry.response)}`.trim();
         elem.appendChild(responseBox);
 
         box.appendChild(elem);
@@ -138,6 +141,12 @@ window.updateQuestionList = async function() {
 
     document.getElementById("loading-box").innerHTML = list.length ? loadingTextB : loadingTextC;
     reloadAllowed = true;
+}
+
+function escapeHtml(unsafe) {
+    const elem = document.createElement("div");
+    elem.innerText = unsafe;
+    return elem.innerHTML;
 }
 
 })();

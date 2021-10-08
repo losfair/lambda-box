@@ -22,8 +22,7 @@ export function renderIndex(config: IndexRenderConfig): Response {
     ownerGhid: JSON.stringify(config.ownerGhid || null),
     userMdHtml: config.userMdHtml || "",
     blockReason: config.blockReason || "",
-    questionHint: config.userConfig?.questionHint || "Ask me anything!",
-    metaTitle: config.ownerGhlogin ? `Ask @${config.ownerGhlogin}` : "λ-box MT",
+    pageTitle: (config.ownerGhlogin ? `Ask @${config.ownerGhlogin} | ` : "") + "λ-box",
     metaDesc: rawMdSegs.length ? rawMdSegs[0] : "Ask me anything!",
   }), {
     status: config.status || 200,
