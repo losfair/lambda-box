@@ -4,10 +4,10 @@
         <title>λ-box 提问箱</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta charset="utf-8">
-        <meta property="og:title" content="λ-box 提问箱">
-        <meta property="og:description" content="Ask me anything!">
-        <meta itemprop="name" content="λ-box 提问箱">
-        <meta itemprop="description" content="Ask me anything!">
+        <meta property="og:title" content="{{ metaTitle }}">
+        <meta property="og:description" content="{{ metaDesc }}">
+        <meta itemprop="name" content="{{ metaTitle }}">
+        <meta itemprop="description" content="{{ metaDesc }}">
         <script>
             const lb_ownerGhid = {{ ownerGhid | safe }};
             const lb_ownerGhlogin = {{ ownerGhlogin | safe }};
@@ -21,7 +21,17 @@
             <p>{{ pageError }}</p>
             {% else %}
             <div class="new-question">
+                {% if userMdHtml %}
+                <div class="intro">
+                    {{ userMdHtml | safe }}
+                    <p class="intro-tail">
+                        @<a href="https://github.com/{{ ownerGhloginUnwrapped }}">{{ ownerGhloginUnwrapped }}</a>
+                    </p>
+                </div>
+                <p>{{ questionHint }}</p>
+                {% else %}
                 <p>Ask @<a href="https://github.com/{{ ownerGhloginUnwrapped }}">{{ ownerGhloginUnwrapped }}</a></p>
+                {% endif %}
                 {% if blockReason %}
                 <p id="success-hint">{{ blockReason }}</p>
                 {% else %}

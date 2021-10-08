@@ -62,12 +62,14 @@ Router.get("/u/", async req => {
     });
   }
 
-  const userMd = TextUtil.Markdown.renderToHtml(uinfo.mdSection.md, {});
+  const userMdHtml = TextUtil.Markdown.renderToHtml(uinfo.mdSection.md, {});
 
   return renderIndex({
     ownerGhid: uinfo.userinfoSection.ghid,
     ownerGhlogin: username,
-    userMd,
+    userMdHtml,
+    userMdRaw: uinfo.mdSection.md,
+    userConfig: uinfo.mdSection.userConfig,
     blockReason: req.headers.get("x-blueboat-app-block-reason"),
   });
 });

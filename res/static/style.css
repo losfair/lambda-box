@@ -137,3 +137,16 @@ button:focus {
 .qa-response-box > p {
     font-size: 20px;
 }
+
+.intro {
+    border: 1px solid #28afb0;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border-style: dashed;
+    margin-bottom: 20px;
+}
+
+.intro-tail, .intro-tail > a {
+    color: #A0A0A0;
+}
