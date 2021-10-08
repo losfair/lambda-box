@@ -47,7 +47,7 @@
             </div>
             {% endif %}
             <div class="footer">
-                <p>λ-box v2.0.0</p>
+                <p>λ-box v2.0.1</p>
                 <p>
                     <a href="https://univalence.me">Univalence Labs</a>
                     {% if icpBeian %}
