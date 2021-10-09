@@ -1,5 +1,5 @@
 import { appConfig, appDB } from "./config";
-import grayMatter, { GrayMatterFile } from "gray-matter";
+import { DocumentWithFrontMatter, parseDocumentWithFrontMatter } from "./frontmatter";
 
 const octokit = new ExternalService.GitHub.Octokit({
   auth: appConfig.ghToken,
@@ -141,9 +141,9 @@ export async function syncGhUserinfo_InTxn(username: string): Promise<GhUserInfo
       console.log(`cannot fetch /LAMBDA_BOX.md in repo ${username}/${username}`);
     }
 
-    let decoded: GrayMatterFile<string> | null = null;
+    let decoded: DocumentWithFrontMatter | null = null;
     try {
-      if(typeof mdContent === "string") decoded = grayMatter(mdContent);
+      if(typeof mdContent === "string") decoded = parseDocumentWithFrontMatter(mdContent);
     } catch(e) {
       console.log("cannot decode /LAMBDA_BOX.md of user " + username + ": " + e);
     }
@@ -155,12 +155,12 @@ export async function syncGhUserinfo_InTxn(username: string): Promise<GhUserInfo
       `, {
         "u": ["s", username],
         "md": ["s", decoded.content],
-        "uc": ["s", JSON.stringify(decoded.data)],
+        "uc": ["s", JSON.stringify(decoded.frontMatter)],
         "exp": ["d", exp],
       }, "");
       currentInfo.mdSection = {
         md: decoded.content,
-        userConfig: decoded.data,
+        userConfig: decoded.frontMatter,
         expire: exp,
       }
     } else {
