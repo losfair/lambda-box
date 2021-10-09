@@ -4,6 +4,14 @@ import { appConfig, appDB } from "./config";
 import { sendMail } from "./mail";
 import { loadGhUserInfo } from "./multiuser_sync";
 
+Router.get("/client_info", req => {
+  return mkJsonResponse(200, {
+    ip: req.headers.get("x-blueboat-client-ip"),
+    country: req.headers.get("x-blueboat-client-country"),
+    wpbl: req.headers.get("x-blueboat-client-wpbl"),
+  });
+})
+
 Router.post("/api/add_question", async request => {
   const blockReason = request.headers.get("x-blueboat-app-block-reason");
   if(blockReason) {
