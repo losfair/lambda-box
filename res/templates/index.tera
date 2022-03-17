@@ -46,9 +46,9 @@
             </div>
             {% endif %}
             <div class="footer">
-                <p>λ-box v2.0.3 on Blueboat</p>
+                <p>λ-box v2.0.4 on Blueboat</p>
                 <p>
-                    <a href="https://univalence.me">Univalence Labs</a>
+                    <a href="https://zhy.site">Made by @losfair</a>
                     {% if icpBeian %}
                     <span> | <a href="https://beian.miit.gov.cn/">{{ icpBeian }}</a></span>
                     {% endif %}
