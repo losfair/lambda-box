@@ -1,7 +1,7 @@
 import { appConfig } from "./config";
 
 Router.use("/", (req, next) => {
-  const country = req.headers.get("x-blueboat-client-country");
+  const country = req.headers.get("CF-IPCountry") || "";
   const wpbl = req.headers.get("x-blueboat-client-wpbl");
   const countryBlocked = country && appConfig.allowedCountries.length && appConfig.allowedCountries.findIndex(x => x == country) == -1;
   const wpblBlocked = appConfig.useWpbl && wpbl === "1";
