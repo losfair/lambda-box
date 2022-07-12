@@ -1,0 +1,18 @@
+build = "pnpm run build"
+artifact = "dist/main.js"
+static = "./res"
+mysql = ["lambda"]
+
+env = [
+  "mailFrom",
+  "mailReplyTo",
+  "mailgunApiBaseUrl",
+  { key = "icpBeian", optional = true },
+  { key = "allowedGhUsers", optional = true }
+]
+
+secrets = [
+  "inboundToken",
+  "mailgunApiKey",
+  "ghToken",
+]
